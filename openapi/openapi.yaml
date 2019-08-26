@@ -1,0 +1,133 @@
+openapi: 3.0.1
+info:
+  title: Swagger Utair Test Service
+  description: 'This is the Utair Test Service.  You can find out more about     Swagger
+    at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For
+    this sample, you can use the api key `special-key` to test the authorization     filters.'
+  contact:
+    email: roman.oxenuk@gmail.com
+  version: 1.0.0
+
+servers:
+- url: '/api'
+
+paths:
+  /transactions/:
+    get:
+      summary: Get all user transactions
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsResponse'
+
+    post:
+      summary: Add a new Transactions
+      requestBody:
+        description: List of Transactions object that needs to be added
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Transaction'
+        required: true
+
+      responses:
+        201:
+          description: successfully created
+        405:
+          description: Invalid input
+          content: {}
+
+  /user/:
+    get:
+      summary: Get users's profile
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+components:
+  schemas:
+    TransactionsResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 100
+        count:
+          type: integer
+          example: 10
+        prev:
+          type: string
+          nullable: true
+          example: null
+        next:
+          type: string
+          example: '/transactions/?page=2'
+          nullable: true
+        objects:
+          type: array
+          items:
+          $ref: '#/components/schemas/Transaction'
+
+    Transaction:
+      type: object
+      properties:
+        _id:
+          type: string
+        transactions_id:
+          type: integer
+        bonus_card_id:
+          type: integer
+        bonus_miles:
+          type: integer
+        flight_from:
+          type: string
+          example: 'DME'
+        flight_to:
+          type: string
+          example: 'LED'
+        flight_date:
+          type: string
+          example: '2019-01-02'
+      required:
+        - transactions_id
+        - bonus_card_id
+        - bonus_miles
+        - flight_from
+        - flight_to
+        - flight_date
+
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: '5d603cb93f87988aa4433922'
+        name:
+          type: string
+          example: 'Петров Игорь Николаевич'
+        email:
+          type: string
+          example: 'petrov.i.n@example.com'
+        bonus_card_id:
+          type: integer
+          example: 123456

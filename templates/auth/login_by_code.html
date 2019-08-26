@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        {{ form.csrf_token }}
+        {{ form.enter_code }}
+
+        {% if form.enter_code.errors %}
+            <ul class="errors">
+                {% for error in form.enter_code.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <input type="submit" value="Log in">
+    </form>
+{% endblock %}
