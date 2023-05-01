@@ -1,7 +1,7 @@
 Click==7.0
 connexion[swagger-ui]==2.3.0
 Faker==2.0.1
-Flask==1.1.1
+Flask==2.3.2
 Flask-DebugToolbar==0.10.1
 Flask-Login==0.4.1
 flask-marshmallow==0.10.1
